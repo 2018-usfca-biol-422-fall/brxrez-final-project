@@ -3,7 +3,7 @@ title: "Final Report: Your Title Here"
 author: "Brian Rezende"
 date: "December 5, 2018"
 output:
-    github_document: default
+github_document: default
 bibliography: references.bib
 csl: bioinformatics.csl
 ---
