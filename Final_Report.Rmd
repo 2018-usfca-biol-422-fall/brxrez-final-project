@@ -53,9 +53,6 @@ library("ggplot2")
 library("seqinr")
 library("mctoolsr")
 library("phyloseq")
-# load tree package
-source("https://bioconductor.org/biocLite.R")
-biocLite("ggtree")
 
 # load data produced from analysis scripts using
 # something like load("output/processed_data.Rdata")
@@ -65,6 +62,7 @@ load("output/phyloseq_obj.R")
 ```{r most-abundant-phylum-day-0}
 melted_phyloseq %>%
   filter(Treatment %in%  c("Probiotic Treatment", "Probiotic Treatmen")) %>%
+  ggplot()
   
 
 ```
@@ -100,14 +98,14 @@ ggplot(aes(x = Subject,
 ```
 *Figure 1*: Total abundance of bacteria found in each subject, according to the date that their fecal specimen was collected and tested. Subject E showed no instance of bacteria or samples upon initially entering into the study. Subject F left before the first week due to dislike of the yogurt diet. 
 ```{r boxplot-of-subject-with-treatment}
-metadata_in_2 %>%
-ggplot(aes(x = Subject,
-             y = AvgSpotLen,
-             fill = Treatment)) +
+melted_phyloseq %>%
+ggplot(aes(x = Treatment,
+             y = timepoint,
+             fill = Phylum)) +
    geom_boxplot() +
-    facet_wrap(~Day) +
-    xlab("Subject") +
-    ylab("Average Spot Length") +
+    facet_wrap(~Subject) +
+    xlab("Treatment") +
+    ylab("Timepoint") +
     ggtitle("Working title") +
     theme_bw() +
   theme(axis.text.x = element_text(angle = 90,
@@ -116,14 +114,26 @@ ggplot(aes(x = Subject,
 ```
 
 ```{r}
-metadata_in_2 %>%
-  phyloseq()
+# error message comes up and says that the object "Class" is not found -_-
+# generate a heat map to hopefully draw some inference of what can drive stress prevention and cardiac disease
+gpac <- subset_taxa(melted_phyloseq, Class == "Actinobacteria")
+plot_heatmap(gpac)
+  
 ```
 
-```{r filtered-ABCF-treatment}
-metadata_in_2 %>%
+```{r filtered-ABCDG-treatment}
+melted_phyloseq %>%
   filter(Subject %in% 
-           c("Subject A", "Subject B", "Subject "))
+           c("Subject A", "Subject B", "Subject C", "Subject D", 
+             "Subject G")) %>%
+  ggplot(aes(x = Sample,
+             y = timepoint,
+             fill = Treatment)) +
+  geom_jitter() +
+  xlab("Type of Treatment") +
+  ylab("Time") +
+  ggtitle("Abundance of Total DNA vs Control") +
+  theme_bw()
 ```
 
 
