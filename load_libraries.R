@@ -176,7 +176,7 @@ export_taxa_table_and_seqs(sequence_table_nochim,
 # and the `stringsAsFactors = FALSE` tells it not to assume that things are
 # categorical variables
 metadata_in <- read.table(paste0("data/metadata/",
-                                 "SraRunTable.txt"),
+                                 "SraRunTable1.txt"),
                           sep = "\t",
                           header = TRUE,
                           stringsAsFactors = FALSE) # sets sample IDs to row names
@@ -197,10 +197,10 @@ phyloseq_obj <- phyloseq(otu_table(sequence_table_nochim,
                                    taxa_are_rows = FALSE), # sample-spp matrix
                          sample_data(metadata_in_2), # metadata for each sample
                          tax_table(taxa)) # taxonomy for each sequence variant
-
+                         
 # Melt the physloseq object for dplyr/ggplot
 melted_phyloseq <- psmelt(phyloseq_obj)
 
 # Move the saved phyloseq into the output folder 
-save(phyloseq_obj,
+save(melted_phyloseq,
      file = "output/phyloseq_obj.R")
