@@ -53,10 +53,79 @@ library("ggplot2")
 library("seqinr")
 library("mctoolsr")
 library("phyloseq")
+# load tree package
+source("https://bioconductor.org/biocLite.R")
+biocLite("ggtree")
 
 # load data produced from analysis scripts using
 # something like load("output/processed_data.Rdata")
+load("output/phyloseq_obj.R")
 ```
+
+```{r most-abundant-phylum-day-0}
+melted_phyloseq %>%
+  filter(Treatment %in%  c("Probiotic Treatment", "Probiotic Treatmen")) %>%
+  
+
+```
+
+```{r plot-richness-across-day-0-7-42-with-abundance}
+
+plot_richness(melted_phyloseq,
+              x = Subject,
+              color = Day,
+              measures = c("Observed", "Shannon")) +
+  xlab("Day in Study") +
+ggtitle("Plot richness of subjects throughout the study")
+```
+
+```{r most-abundant-phylum-day-7}
+
+```
+
+```{r most-abundant-phylum-day-42}
+
+```
+
+```{r general-abundance-within-subjects}
+melted_phyloseq %>%
+ggplot(aes(x = Subject,
+             y = Abundance,
+             fill = Day)) +
+  geom_col(position = position_dodge()) +
+  xlab("Subject") +
+  ylab("Abundance") +
+  ggtitle("Total Abundance in Each Subject")
+
+```
+*Figure 1*: Total abundance of bacteria found in each subject, according to the date that their fecal specimen was collected and tested. Subject E showed no instance of bacteria or samples upon initially entering into the study. Subject F left before the first week due to dislike of the yogurt diet. 
+```{r boxplot-of-subject-with-treatment}
+metadata_in_2 %>%
+ggplot(aes(x = Subject,
+             y = AvgSpotLen,
+             fill = Treatment)) +
+   geom_boxplot() +
+    facet_wrap(~Day) +
+    xlab("Subject") +
+    ylab("Average Spot Length") +
+    ggtitle("Working title") +
+    theme_bw() +
+  theme(axis.text.x = element_text(angle = 90,
+                         hjust = 1))
+
+```
+
+```{r}
+metadata_in_2 %>%
+  phyloseq()
+```
+
+```{r filtered-ABCF-treatment}
+metadata_in_2 %>%
+  filter(Subject %in% 
+           c("Subject A", "Subject B", "Subject "))
+```
+
 
 In addition to a minimum of 5-8 figures/tables (and associated captions), you should include sufficient text in this section to describe what your findings were. Remember that in the results section you just describe what you found, but you don't interpret it - that happens in the discussion. 2-3 pages.
 
