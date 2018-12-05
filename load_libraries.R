@@ -179,7 +179,8 @@ metadata_in <- read.table(paste0("data/metadata/",
                                  "SraRunTable1.txt"),
                           sep = "\t",
                           header = TRUE,
-                          stringsAsFactors = FALSE) # sets sample IDs to row names
+                          stringsAsFactors = FALSE,
+                          row.names = 9) # sets sample IDs to row names
 
 # Group column was separated into three different columns for better analysis
 # Mutate was called to achieve numerical order of timepoint 
@@ -190,7 +191,7 @@ metadata_in_2 <- metadata_in %>%
            sep=";") %>%
   mutate(timepoint = gsub(x = Day, pattern = "Day ",replacement = ""))
 
-row.names(metadata_in_2) <- metadata_in_2$Run #fixes error in column matching
+row.names(metadata_in_2) <- row.names(metadata_in) #fixes error in column matching
 
 # Construct phyloseq object (straightforward from dada2 outputs)
 phyloseq_obj <- phyloseq(otu_table(sequence_table_nochim,
@@ -202,5 +203,7 @@ phyloseq_obj <- phyloseq(otu_table(sequence_table_nochim,
 melted_phyloseq <- psmelt(phyloseq_obj)
 
 # Move the saved phyloseq into the output folder 
-save(melted_phyloseq,
+save(phyloseq_obj,
      file = "output/phyloseq_obj.R")
+save(melted_phyloseq,
+     file = "output/melted_obj.R")
