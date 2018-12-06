@@ -1,11 +1,9 @@
----
-title: "Final Project: Insert Title Here"
-author: "Brian Rezende"
-date: "November 30, 2018"
-output: github_document
-bibliography: references.bib
-csl: bioinformatics.csl
----
+#!/bin/bash
+
+# Script for final project -- loading the necessary libraries
+# Brian Rezende
+# brezende@dons.usfca.edu
+# Created December 6, 2018
 
 # Be sure to install these packages before running this script
 # They can be installed either with the intall.packages() function
