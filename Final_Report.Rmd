@@ -1,5 +1,5 @@
 ---
-title: "Final Report: Your Title Here"
+title: "Final Report: Dietary Yogurt Influence on Human Fitness and Disease"
 author: "Brian Rezende"
 date: "December 5, 2018"
 output:
@@ -50,32 +50,32 @@ library("tidyr")
 library("citr")
 library("knitr")
 library("ggplot2")
-library("seqinr")
-library("mctoolsr")
 library("phyloseq")
 
 # load data produced from analysis scripts using
 # something like load("output/processed_data.Rdata")
 load("output/phyloseq_obj.R")
+load("output/melted_obj.R")
 ```
 
 ```{r most-abundant-phylum-day-0}
 melted_phyloseq %>%
-  filter(Treatment %in%  c("Probiotic Treatment", "Probiotic Treatmen")) %>%
-  ggplot()
+  ggplot() #this figure remains incomplete and needs to be added on to
   
-
 ```
 
-```{r plot-richness-across-day-0-7-42-with-abundance}
-
-plot_richness(melted_phyloseq,
-              x = Subject,
-              color = Day,
+```{r plot-richness-across-day-0-7-42-with-abundance, echo=FALSE}
+# Plot richness within each subject observed during each check point of the
+# study. The Shannon index was used to look at species richness and evenness. 
+plot_richness(phyloseq_obj,
+              x = "Subject",
+              color = "Day",
               measures = c("Observed", "Shannon")) +
   xlab("Day in Study") +
 ggtitle("Plot richness of subjects throughout the study")
 ```
+
+*Figure 1:* Plot richness of each subject with comparisons of observed and Shannon index. There is an observed spread amongst each of the day samples were collected. Overlaps indicate no change or regression back to the original condition with some variation. Alpha diversity measure was used for observed and a smaller measure was seen in the Shannon index. 
 
 ```{r most-abundant-phylum-day-7}
 
@@ -85,62 +85,72 @@ ggtitle("Plot richness of subjects throughout the study")
 
 ```
 
-```{r general-abundance-within-subjects}
+```{r general-abundance-within-subjects, echo=FALSE}
+# This figure allows us to draw comparisons between each subject and track chan
+# ges over time in regards to abundance of bacterial communities. 
 melted_phyloseq %>%
-ggplot(aes(x = Subject,
+  ggplot(aes(x = Subject,
+               y = Abundance,
+               fill = timepoints)) +
+    geom_col(position = position_dodge()) +
+    xlab("Subject") +
+    ylab("Abundance") +
+    ggtitle("Total Abundance in Each Subject")
+```
+
+*Figure 2*: Total abundance of bacteria found in each subject, according to the date that their fecal specimen was collected and tested. Subject E showed no instance of bacteria or samples upon initially entering into the study. Subject F left before the first week due to dislike of the yogurt diet.
+
+```{r boxplot-of-subject-with-treatment, echo=FALSE}
+melted_phyloseq %>%
+  ggplot(aes(x = Treatment,
              y = Abundance,
-             fill = Day)) +
-  geom_col(position = position_dodge()) +
-  xlab("Subject") +
-  ylab("Abundance") +
-  ggtitle("Total Abundance in Each Subject")
-
-```
-*Figure 1*: Total abundance of bacteria found in each subject, according to the date that their fecal specimen was collected and tested. Subject E showed no instance of bacteria or samples upon initially entering into the study. Subject F left before the first week due to dislike of the yogurt diet. 
-```{r boxplot-of-subject-with-treatment}
-melted_phyloseq %>%
-ggplot(aes(x = Treatment,
-             y = timepoint,
              fill = Phylum)) +
-   geom_boxplot() +
-    facet_wrap(~Subject) +
-    xlab("Treatment") +
-    ylab("Timepoint") +
-    ggtitle("Working title") +
-    theme_bw() +
+  geom_boxplot() +
+  xlab("Treatment") +
+  ylab("Abundance") +
+  ggtitle("Scaled Boxplot of Treatment Effects on Different Phylum Abundance") +
+  theme_bw() +
+  scale_y_log10() + # Use this function to observe orders of magnitude or when
+  # samples are too clustured together to observe differences. 
   theme(axis.text.x = element_text(angle = 90,
-                         hjust = 1))
-
+                                   hjust = 1))
 ```
 
-```{r}
+*Figure 3:* The two types of treatment and its effects on the presence of the different phylum and how abundance changes over the course of the study. Outliers are only present within the probiotic treatment group. Greater averages are observed within the treatment group as well with the exception of Actinobacteria. 
+
+```{r observed-plot-richness-with-alpha-diversity, echo=FALSE}
 # error message comes up and says that the object "Class" is not found -_-
-# generate a heat map to hopefully draw some inference of what can drive stress prevention and cardiac disease
-gpac <- subset_taxa(melted_phyloseq, Class == "Actinobacteria")
-plot_heatmap(gpac)
-  
+# Data frame is small enough to refer to "observed" and it demonstrates that
+# averages were around the same for each time point.
+plot_richness(phyloseq_obj, x = "timepoints", measures = "Observed") +
+  geom_boxplot()
 ```
 
-```{r filtered-ABCDG-treatment}
+*Figure 4:* Alpha diversity measure at three distinct time points, which reveals that observed data is uniform throughout the study with noticeable outliers at each timepoint. There is a greater diversity seen at the day 42 timepoint in comparison to the other time points. The boxplot demonstrates evenness as well throughout the 3 time points. 
+
+```{r filtered-ABCDG-treatment, echo = FALSE}
 melted_phyloseq %>%
-  filter(Subject %in% 
-           c("Subject A", "Subject B", "Subject C", "Subject D", 
+  filter(Subject %in%
+           c("Subject A", "Subject B", "Subject C", "Subject D",
              "Subject G")) %>%
-  ggplot(aes(x = Sample,
-             y = timepoint,
+  ggplot(aes(x = Subject,
+             y = timepoints,
              fill = Treatment)) +
-  geom_jitter() +
-  xlab("Type of Treatment") +
-  ylab("Time") +
+  geom_jitter() + #jitter is categorizing everything, needs to be fixed because
+  # it does not reveal anything important. 
+  xlab("Subjects") +
+  ylab("Time points") +
   ggtitle("Abundance of Total DNA vs Control") +
   theme_bw()
 ```
 
+Shannon-Wiener index provides a good estimate of ecological diversity, which allowed us to quantify the changes in gut microbial diversity. This diversity was based on terminal restriction fragments (T-RFs) and NGS universal bacteria primer data after the patients ate yogurt. Shannon index takes into account both richness and evenness of each group. The first two weeks suggested a trend towards greater diversity, followed by a plateau and drop by the time it reached day 42. 
 
-In addition to a minimum of 5-8 figures/tables (and associated captions), you should include sufficient text in this section to describe what your findings were. Remember that in the results section you just describe what you found, but you don't interpret it - that happens in the discussion. 2-3 pages.
 
 # Discussion
 
-Add around 3-4 pages interpreting your results and considering future directions one might take in analyzing these data.
+We observe changes in the microbial community composition begins to change by 7 days of yogurt consumption. Clustering is then observed at days 14 and 42. This vast gap between sample collection dates could possibly hold implications for natural therapeutics. 
+Variable results arise from the independent choice of primers and sequencing methods (Fouhy et al). 
+
 
 # Sources Cited
