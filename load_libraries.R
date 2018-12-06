@@ -6,12 +6,12 @@ output: github_document
 bibliography: references.bib
 csl: bioinformatics.csl
 ---
-  
+
 # Be sure to install these packages before running this script
 # They can be installed either with the intall.packages() function
 # or with the 'Packages' pane in RStudio
 # load general-use packages
-  
+
 library("dplyr")
 library("tidyr")
 library("knitr")
@@ -184,15 +184,16 @@ metadata_in <- read.table(paste0("data/metadata/",
 
 # Group column was separated into three different columns for better analysis
 # Mutate was called to achieve numerical order of timepoint 
-metadata_in_2 <- metadata_in %>% 
+metadata_in_2 <- metadata_in %>%
   separate(Group, into = c("Subject",
                            "Day",
                            "Treatment"),
-           sep=";") %>%
-  mutate(timepoint = gsub(x = Day, pattern = " Day ",replacement = "")) %>%
+           sep = ";") %>%
+  mutate(timepoint = gsub(x = Day, pattern = " Day ", replacement = "")) %>%
   mutate(timepoints = factor(timepoint, levels = c("0", "7", "42")))
 
-row.names(metadata_in_2) <- row.names(metadata_in) #fixes error in column matching
+row.names(metadata_in_2) <- row.names(metadata_in) #fixes error in column
+#matching
 
 # Construct phyloseq object (straightforward from dada2 outputs)
 phyloseq_obj <- phyloseq(otu_table(sequence_table_nochim,
