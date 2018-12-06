@@ -189,7 +189,8 @@ metadata_in_2 <- metadata_in %>%
                            "Day",
                            "Treatment"),
            sep=";") %>%
-  mutate(timepoint = gsub(x = Day, pattern = "Day ",replacement = ""))
+  mutate(timepoint = gsub(x = Day, pattern = " Day ",replacement = "")) %>%
+  mutate(timepoints = factor(timepoint, levels = c("0", "7", "42")))
 
 row.names(metadata_in_2) <- row.names(metadata_in) #fixes error in column matching
 
