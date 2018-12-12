@@ -5,8 +5,8 @@
 # November 30, 2018
 
 # Script to pull data from NCBI
-# It runs a pipeline to extract fastq files and then run through QC checks,
-# trimming, and BLASTING
+# It runs a pipeline to extract fastq files and then run through QC checks and
+# trimming. 
 
 # We are cutting out the 9th column because it contains the SRA numbers that
 # fastq dump needs to download
