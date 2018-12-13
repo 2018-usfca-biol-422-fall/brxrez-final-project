@@ -34,7 +34,7 @@ These are the methods you used to do your bioinformatic analyses analyses. Shoul
 
 ## Subsections are ok in the results section too
 
-```{r your-code-here}
+```{r your-code-here, echo=FALSE}
 # Add code chunks as needed for your analyses
 # For most analyses, I would recommend splitting the
 # intensive computational part into a seperate R script file
@@ -43,7 +43,7 @@ These are the methods you used to do your bioinformatic analyses analyses. Shoul
 # unclear.
 ```
 
-```{r load-packages-and-data}
+```{r load-packages-and-data, echo=FALSE, warning=FALSE}
 # load packages as needed
 library("dplyr")
 library("tidyr")
@@ -58,11 +58,61 @@ load("output/phyloseq_obj.R")
 load("output/melted_obj.R")
 ```
 
-```{r most-abundant-phylum-day-0}
+```{r most-abundant-phylum-day-0, warning=FALSE, echo=FALSE}
 melted_phyloseq %>%
-  ggplot() #this figure remains incomplete and needs to be added on to
+  filter(timepoints == "0") %>%
+  filter(!is.na(Genus)) %>%
+  group_by("Genus") %>%
+  ggplot(aes(x = Genus,
+             y = Abundance,
+             fill = Subject))+
+  geom_bar(stat = "Identity")+
+  xlab("Genus")+
+  ylab("Abundance")+
+  theme(axis.text.x = element_text(angle = 90,
+                                   hjust = 1))+
+  ggtitle("Abundance of Bacteria on Day 0 per Subject")
   
 ```
+
+**Figure 1:** 
+
+```{r most-abundant-phylum-day-7, echo=FALSE}
+melted_phyloseq %>%
+  filter(timepoints == "7") %>%
+  filter(!is.na(Genus)) %>%
+  group_by("Genus") %>%
+  ggplot(aes(x = Genus,
+             y = Abundance,
+             fill = Subject))+
+  geom_bar(stat = "Identity")+
+  xlab("Genus")+
+  ylab("Abundance")+
+  theme(axis.text.x = element_text(angle = 90,
+                                   hjust = 1))+
+  ggtitle("Abundance of Bacteria on Day 7 per Subject")
+
+```
+
+**Figure 2:**
+
+```{r most-abundant-phylum-day-42, echo=FALSE}
+melted_phyloseq %>%
+  filter(timepoints == "42") %>%
+  filter(!is.na(Genus)) %>%
+  group_by("Genus") %>%
+  ggplot(aes(x = Genus,
+             y = Abundance,
+             fill = Subject))+
+  geom_bar(stat = "Identity")+
+  xlab("Genus")+
+  ylab("Abundance")+
+  theme(axis.text.x = element_text(angle = 90,
+                                   hjust = 1))+
+  ggtitle("Abundance of Bacteria on Day 42 per Subject")
+```
+ 
+**Figure 3:**
 
 ```{r plot-richness-across-day-0-7-42-with-abundance, echo=FALSE}
 # Plot richness within each subject observed during each check point of the
@@ -71,34 +121,29 @@ plot_richness(phyloseq_obj,
               x = "Subject",
               color = "Day",
               measures = c("Observed", "Shannon")) +
-  xlab("Day in Study") +
+  xlab("Subject") +
 ggtitle("Plot richness of subjects throughout the study")
 ```
 
-*Figure 1:* Plot richness of each subject with comparisons of observed and Shannon index. There is an observed spread amongst each of the day samples were collected. Overlaps indicate no change or regression back to the original condition with some variation. Alpha diversity measure was used for observed and a smaller measure was seen in the Shannon index. 
+*Figure 4:* Plot richness of each subject with comparisons of observed and Shannon index. There is an observed spread amongst each of the day samples were collected. Overlaps indicate no change or regression back to the original condition with some variation. Alpha diversity measure was used for observed and a smaller measure was seen in the Shannon index. 
 
-```{r most-abundant-phylum-day-7}
-
-```
-
-```{r most-abundant-phylum-day-42}
-
-```
 
 ```{r general-abundance-within-subjects, echo=FALSE}
 # This figure allows us to draw comparisons between each subject and track chan
 # ges over time in regards to abundance of bacterial communities. 
 melted_phyloseq %>%
   ggplot(aes(x = Subject,
-               y = Abundance,
-               fill = timepoints)) +
-    geom_col(position = position_dodge()) +
-    xlab("Subject") +
-    ylab("Abundance") +
-    ggtitle("Total Abundance in Each Subject")
+             y = Abundance,
+             fill = timepoints)) +
+  geom_col(position = position_dodge()) +
+  xlab("Subject") +
+  ylab("Abundance") +
+  theme(axis.text.x = element_text(angle = 90,
+                                   hjust = 1)) +
+  ggtitle("Total Abundance in Each Subject")
 ```
 
-*Figure 2*: Total abundance of bacteria found in each subject, according to the date that their fecal specimen was collected and tested. Subject E showed no instance of bacteria or samples upon initially entering into the study. Subject F left before the first week due to dislike of the yogurt diet.
+*Figure 5*: Total abundance of bacteria found in each subject, according to the date that their fecal specimen was collected and tested. Subject E showed no instance of bacteria or samples upon initially entering into the study. Subject F left before the first week due to dislike of the yogurt diet.
 
 ```{r boxplot-of-subject-with-treatment, echo=FALSE}
 melted_phyloseq %>%
@@ -119,7 +164,6 @@ melted_phyloseq %>%
 *Figure 3:* The two types of treatment and its effects on the presence of the different phylum and how abundance changes over the course of the study. Outliers are only present within the probiotic treatment group. Greater averages are observed within the treatment group as well with the exception of Actinobacteria. 
 
 ```{r observed-plot-richness-with-alpha-diversity, echo=FALSE}
-# error message comes up and says that the object "Class" is not found -_-
 # Data frame is small enough to refer to "observed" and it demonstrates that
 # averages were around the same for each time point.
 plot_richness(phyloseq_obj, x = "timepoints", measures = "Observed") +
@@ -134,14 +178,28 @@ melted_phyloseq %>%
            c("Subject A", "Subject B", "Subject C", "Subject D",
              "Subject G")) %>%
   ggplot(aes(x = Subject,
-             y = timepoints,
+             y = Abundance,
              fill = Treatment)) +
-  geom_jitter() + #jitter is categorizing everything, needs to be fixed because
-  # it does not reveal anything important
+  geom_line() +
   xlab("Subjects") +
-  ylab("Time points") +
-  ggtitle("Abundance of Total DNA vs Control") +
+  ylab("Abundance") +
+  theme(axis.text.x = element_text(angle = 90,
+                                   hjust = 1)) +
+  ggtitle("Abundance  vs Control") +
   theme_bw()
+```
+
+```{r-compare-makeup-of-bacterial-community-abundance-with-abundance}
+melted_phyloseq %>%
+  ggplot(aes(x = Subject,
+             y = Abundance,
+             fill = Genus)) +
+  geom_col(position = position_dodge()) +
+  xlab("Subject") +
+  ylab("Abundance") +
+  theme(axis.text.x = element_text(angle = 90,
+                                   hjust = 1)) +
+  ggtitle("Total Abundance in Each Subject")
 ```
 
 Shannon-Wiener index provides a good estimate of ecological diversity, which allowed us to quantify the changes in gut microbial diversity. This diversity was based on terminal restriction fragments (T-RFs) and NGS universal bacteria primer data after the patients ate yogurt. Shannon index takes into account both richness and evenness of each group. The first two weeks suggested a trend towards greater diversity, followed by a plateau and drop by the time it reached day 42. 
