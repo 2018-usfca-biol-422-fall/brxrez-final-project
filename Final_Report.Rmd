@@ -14,7 +14,14 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
-Add about 2-3 pages here. Across the whole manuscript, you should cite at least 20 peer reviewed articles.
+One of the most essential microbiome communities in humans is the gut microbiome that is enclosed by the gastrointestinal tract (GI). Microbiomes are large operating communities that are composed of about 38 trillion microbiome cells and 30 trillion human cells, thus accounting for every surface of the human body [@Sender2016]. Within the GI, these numbers will fluctuate as a result of long-term or short-term resident bacteria that is acquired through diet [@deAlmada2015]. Rather than finding trillions of bacterial cells, the GI contains approximately 1011-1012 bacteria cells per gram of luminal content [@Rastall2004]. Though this is a drastic subset of the entire human microbiome community, this region still exhibits microbial density and diversity that increases distally all the way through and towards the colon. The human gut is an interesting region to study as it contains microbiota that carry out vital functions for humans and can dictate our health. Previous work has demonstrated that the human gut is primarily dominated by *Phylums Bacteroidetes* and *Firmicutes* that contain *Genus* such as *Bifidobacteria*, *Lactobacillus*, *Streptococcus*, and *Clostridia*, while other types of bacteria are seen yet found in lesser proportions [@Sekirov2010]. Though the exact composition of the mammalian GI is host specific, one way we may be able to reach equilibrium and quantify changes in the GI is through the use of probiotics.
+Probiotics have gained increased popularity and attention through the use of advertisement and commercials, which is supported by its ability to prevent multiple gastrointestinal diseases, coupled with various host health benefits seen by modulating immunological responses. For instance, a study has shown that yogurt, milk, and cheese consumption is associated with decreased common carotid artery intima-media thickness **(CCA-IMT)** and is able to reduce cardiovascular disease risk factors [@Ivey2011]. Yogurt consumption in specific was shown to decrease CCA-IMT in the healthy subjects as opposed to the other individuals who had lower consumption of the dairy products. Other studies indicate that frequent consumption of yogurt intake also aids in lowering diabetes risk, enhancing development of host immunity, and lowering the risk for dysbiosis and chronic kidney disease. 
+The most traditional commensal microbiota that are consumed for their potential health benefits include *Bifidobacterium* and *Lactobacillus*. *Lactobacilli*-containing yogurt in particular has been shown to alter the composition of the gut microbiota of healthy individuals and it reports changes for two groups of bacteria: *Bacteriodes* and *Prevotella*, along with the *C. coccoides-E. Rectalei* group [@UYENO2008]. Though probiotics have the ability to increase the gut content of certain strains, they do not significantly alter the microbial community structure, which is key for maintaining proper function of the human gut. 
+Another impressive feat of probiotic yogurt consumption is seen in individuals infected by *Helicobacter pylori*. This infection results in chronic gut inflammation and causes an imbalance of *Bifidobacterium/E.coli* ratio. This imbalance was found to be rectified by yogurt consumption as it restores an optimal ratio coupled with altering the serum immune response [@Lisko2017]. Probiotics accomplish this by increasing the gut microbiota to be *Bifidobacterium* dominant, which kids that suffer from *H. pylori* are deficient in, by stimulating a subtle inflammation in the intestine that elevates secretion of mucosal immunoglobulin A (IgA) into the serum [@Yang2012]. These findings help to confirm that yogurt consumption can modulate both cellular and humoral immunity in children. It is thus no surprise as to why yogurt is supposed to be an integral part of our diet and is seen as a popular health-promotion food. 
+An important relationship between host and gut, is the gut-brain axis. This axis allows for communication between the gut and host as it is a bidirectional neurohumoral communication system that is able to dictate behavior and health. Signals from the brain are able to modify motor, sensory, and secretory modalities of the GI, while signals from the gut affect emotional behavior, stress, and pain systems through neural, endocrine, and immune pathways [@KatoKataoka2016]. Probiotic consumption may play a role by modulating this communication system which affects emotion in health and disease and positively benefits the host. Probiotics accomplish this by maintaining the mucosal barrier function under stressful situations and by mitigating stress induced glucocorticoid and inflammatory cytokine responses [@KatoKataoka2016]. They also possess the ability to reduce the mRNA expression of GABA receptors in the brain by modulating the gut-brain axis via vagal pathways [@Bravo2011]. This amalgamation of these processes thus exhibit one of the direct pathways of probiotics on human fitness. 
+A particular genus of interest within probiotics is *Lactobacillus* as they demonstrate a stronger presence over *Bifidobacteria* species within the host-gut system. Though this genus makes up only **1%** of the total microbatercial community, it is still comprised of many diverse organisms. Current work demonstrates that it includes over 25 species that are capable of inhibiting various habitats such as GI tracts to other fermented foods [@Heilig2002]. These species are what influence health, behavior, and overall structure of the gut microbiota, making it particularly interesting to explore and track as consuming yogurt containing these strains increase their levels found within individuals throughout aging. Identified species of *Lactobacillus* are vastly malleable to other pathways in the body and can possibly serve as therapeutics for an array of diseases and biological dysfunctions in the future. 
+Further research must still be done in order to determine the direct mechanisms that probiotics operate and to reveal species that are still undiscovered. Questions remain on whether or not probiotics play a direct or indirect effect in the pathways that they are involved in. One of the pitfalls in being able to answer such questions is that studies require longer time periods in order to better determine the effects of consumption and then quantify the changes it brings about. 
+Given the diverse relationships that probiotics may affect, especially in the GI tract, this analysis will aim to analyze the effects of prolonged probiotic intake in the modulation of the GI microbiome. Since bacteria has the ability to act in positive ways and influence health and behavior, I will focus on *Lactobacilli* and *Bifidobacteria* populations and how they change over time. Given their inherent change, I hypothesize that changes in bacterial composition within the GI tract are essential for increasing an individual's fitness, specifically in combating stress and cardiovascular diseases.
 
 # Methods
 
@@ -32,17 +39,6 @@ These are the methods you used to do your bioinformatic analyses analyses. Shoul
 
 # Results
 
-## Subsections are ok in the results section too
-
-```{r your-code-here, echo=FALSE}
-# Add code chunks as needed for your analyses
-# For most analyses, I would recommend splitting the
-# intensive computational part into a seperate R script file
-# and then just load your libraries and the data object here
-# using the `load()` function. Ask me for clarification if this is
-# unclear.
-```
-
 ```{r load-packages-and-data, echo=FALSE, warning=FALSE}
 # load packages as needed
 library("dplyr")
@@ -58,7 +54,7 @@ load("output/phyloseq_obj.R")
 load("output/melted_obj.R")
 ```
 
-```{r most-abundant-phylum-day-0, warning=FALSE, echo=FALSE}
+```{r most-abundant-genus-day-0, warning=FALSE, echo=FALSE}
 melted_phyloseq %>%
   filter(timepoints == "0") %>%
   filter(!is.na(Genus)) %>%
@@ -75,9 +71,9 @@ melted_phyloseq %>%
   
 ```
 
-**Figure 1:** 
+**Figure 1:** Bacterial community composition in GI tract for each of the 8 healthy subjects on day 0. Figure shows genus species levels without any affect of yogurt consumption. *Bifidobacterium* demonstrates greater abundance of species over *Lactobacillus*. Subject G demonstrates no presence of *Bifidobacterium*. Though it is *very* small (pertaining to Subject C and D), all subjects show traces of the species *Lactobacillus*. Subject E is missing from from this data collection date. 
 
-```{r most-abundant-phylum-day-7, echo=FALSE}
+```{r most-abundant-genus-day-7, echo=FALSE}
 melted_phyloseq %>%
   filter(timepoints == "7") %>%
   filter(!is.na(Genus)) %>%
@@ -94,9 +90,9 @@ melted_phyloseq %>%
 
 ```
 
-**Figure 2:**
+**Figure 2:** Bacterial community composition in GI tract for each of the 8 healthy subjects on day 7. Figure shows an increase in some species such as *Shingella* and *Salmonella*, while presence of *Lactobacillus* is vastly decreased in subject B. On day 7, subject E appears and demonstrates that it contains *Bifidobacterium*. In contrast, subjects A, E, and G show an increase in both genus species. Subjects C and F appear to be missing from this data collection date. 
 
-```{r most-abundant-phylum-day-42, echo=FALSE}
+```{r most-abundant-genus-day-42, echo=FALSE}
 melted_phyloseq %>%
   filter(timepoints == "42") %>%
   filter(!is.na(Genus)) %>%
@@ -112,7 +108,7 @@ melted_phyloseq %>%
   ggtitle("Abundance of Bacteria on Day 42 per Subject")
 ```
  
-**Figure 3:**
+**Figure 3:** Bacterial community composition in GI tract for each of the 8 healthy subjects on day 42. Figure shows increased abundance of the two popular species, *Bifidobacterium* and *Lactobacillus*, which indicates they're almost reaching equilbirium. On day 42 the presence of these genuses fluctuate further compared to previous time points and almost reach an equal distribution. There is a decrease of *Bifidobacterium* in subjects A and G and an increase of this genus in subjects B, D, and E in comparison to other data collection days. Subject F is missing from the figure. 
 
 ```{r plot-richness-across-day-0-7-42-with-abundance, echo=FALSE}
 # Plot richness within each subject observed during each check point of the
@@ -122,31 +118,31 @@ plot_richness(phyloseq_obj,
               color = "Day",
               measures = c("Observed", "Shannon")) +
   xlab("Subject") +
-ggtitle("Plot richness of subjects throughout the study")
+ggtitle("Observed vs Shannon Index Measure of Healthy Subjects")
 ```
 
-*Figure 4:* Plot richness of each subject with comparisons of observed and Shannon index. There is an observed spread amongst each of the day samples were collected. Overlaps indicate no change or regression back to the original condition with some variation. Alpha diversity measure was used for observed and a smaller measure was seen in the Shannon index. 
-
+**Figure 4:** Plot richness of each subject with comparisons of observed and Shannon index. There is an observed spread amongst each of the day samples were collected. Overlaps indicate no change or regression back to the original condition with some variation. Alpha diversity measure was used for observed and a smaller measure was seen in the Shannon index. 
 
 ```{r general-abundance-within-subjects, echo=FALSE}
-# This figure allows us to draw comparisons between each subject and track chan
-# ges over time in regards to abundance of bacterial communities. 
+# This figure allows us to draw comparisons between each subject and track 
+# changes over time in regards to abundance of bacterial communities. 
 melted_phyloseq %>%
   ggplot(aes(x = Subject,
              y = Abundance,
              fill = timepoints)) +
   geom_col(position = position_dodge()) +
   xlab("Subject") +
-  ylab("Abundance") +
+  ylab("Abundance of Bacteria") +
   theme(axis.text.x = element_text(angle = 90,
                                    hjust = 1)) +
-  ggtitle("Total Abundance in Each Subject")
+  ggtitle("Total Abundance of Bacteria Found Within Each Subject")
 ```
 
-*Figure 5*: Total abundance of bacteria found in each subject, according to the date that their fecal specimen was collected and tested. Subject E showed no instance of bacteria or samples upon initially entering into the study. Subject F left before the first week due to dislike of the yogurt diet.
+**Figure 5:** Total abundance of bacteria found in each subject, according to the date that their fecal specimen was collected and tested. Subject E showed no instance of bacteria or samples upon initial entery into the study. Subject F left before the first week due to dislike of the yogurt diet. Fluctuations of total abundance are observed and seen in various levels throughout subjects. Subject C is missing a collection sample on day 7. 
 
 ```{r boxplot-of-subject-with-treatment, echo=FALSE}
 melted_phyloseq %>%
+  filter(!is.na(Phylum)) %>%
   ggplot(aes(x = Treatment,
              y = Abundance,
              fill = Phylum)) +
@@ -161,7 +157,7 @@ melted_phyloseq %>%
                                    hjust = 1))
 ```
 
-*Figure 3:* The two types of treatment and its effects on the presence of the different phylum and how abundance changes over the course of the study. Outliers are only present within the probiotic treatment group. Greater averages are observed within the treatment group as well with the exception of Actinobacteria. 
+**Figure 6:** Relative abundance of phylum presence based on the effects of both treatment types (Control and yogurt consumption) Figure shows how abundance changes over the course of the study depending on the type of treatment received. Outliers are only present within the probiotic treatment group. Greater changes of abundance averages are observed within the treatment group as well with the exception of Actinobacteria, which appeared to stay relatively neutral. 
 
 ```{r observed-plot-richness-with-alpha-diversity, echo=FALSE}
 # Data frame is small enough to refer to "observed" and it demonstrates that
@@ -170,39 +166,9 @@ plot_richness(phyloseq_obj, x = "timepoints", measures = "Observed") +
   geom_boxplot()
 ```
 
-*Figure 4:* Alpha diversity measure at three distinct time points, which reveals that observed data is uniform throughout the study with noticeable outliers at each timepoint. There is a greater diversity seen at the day 42 timepoint in comparison to the other time points. The boxplot demonstrates evenness as well throughout the 3 time points. 
+**Figure 7:** Alpha diversity measure at three distinct time points, which reveals that observed data is uniform throughout the study with noticeable outliers at each timepoint. There is a greater diversity seen at the day 42 timepoint in comparison to the other time points. The boxplot demonstrates evenness as well throughout the 3 time points. 
 
-```{r filtered-ABCDG-treatment, echo = FALSE}
-melted_phyloseq %>%
-  filter(Subject %in%
-           c("Subject A", "Subject B", "Subject C", "Subject D",
-             "Subject G")) %>%
-  ggplot(aes(x = Subject,
-             y = Abundance,
-             fill = Treatment)) +
-  geom_line() +
-  xlab("Subjects") +
-  ylab("Abundance") +
-  theme(axis.text.x = element_text(angle = 90,
-                                   hjust = 1)) +
-  ggtitle("Abundance  vs Control") +
-  theme_bw()
-```
-
-```{r-compare-makeup-of-bacterial-community-abundance-with-abundance}
-melted_phyloseq %>%
-  ggplot(aes(x = Subject,
-             y = Abundance,
-             fill = Genus)) +
-  geom_col(position = position_dodge()) +
-  xlab("Subject") +
-  ylab("Abundance") +
-  theme(axis.text.x = element_text(angle = 90,
-                                   hjust = 1)) +
-  ggtitle("Total Abundance in Each Subject")
-```
-
-Shannon-Wiener index provides a good estimate of ecological diversity, which allowed us to quantify the changes in gut microbial diversity. This diversity was based on terminal restriction fragments (T-RFs) and NGS universal bacteria primer data after the patients ate yogurt. Shannon index takes into account both richness and evenness of each group. The first two weeks suggested a trend towards greater diversity, followed by a plateau and drop by the time it reached day 42. 
+ 
 
 
 # Discussion
