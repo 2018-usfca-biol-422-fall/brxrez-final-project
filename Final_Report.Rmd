@@ -66,12 +66,12 @@ melted_phyloseq %>%
   group_by("Genus") %>%
   ggplot(aes(x = Genus,
              y = Abundance,
-             fill = Subject))+
-  geom_bar(stat = "Identity")+
-  xlab("Genus")+
-  ylab("Abundance")+
+             fill = Subject)) +
+  geom_bar(stat = "Identity") +
+  xlab("Genus") +
+  ylab("Abundance") +
   theme(axis.text.x = element_text(angle = 90,
-                                   hjust = 1))+
+                                   hjust = 1)) +
   ggtitle("Abundance of Bacteria on Day 0 per Subject")
   
 ```
@@ -85,12 +85,12 @@ melted_phyloseq %>%
   group_by("Genus") %>%
   ggplot(aes(x = Genus,
              y = Abundance,
-             fill = Subject))+
-  geom_bar(stat = "Identity")+
-  xlab("Genus")+
-  ylab("Abundance")+
+             fill = Subject)) +
+  geom_bar(stat = "Identity") +
+  xlab("Genus") +
+  ylab("Abundance") +
   theme(axis.text.x = element_text(angle = 90,
-                                   hjust = 1))+
+                                   hjust = 1)) +
   ggtitle("Abundance of Bacteria on Day 7 per Subject")
 
 ```
@@ -104,12 +104,12 @@ melted_phyloseq %>%
   group_by("Genus") %>%
   ggplot(aes(x = Genus,
              y = Abundance,
-             fill = Subject))+
-  geom_bar(stat = "Identity")+
-  xlab("Genus")+
-  ylab("Abundance")+
+             fill = Subject)) +
+  geom_bar(stat = "Identity") +
+  xlab("Genus") +
+  ylab("Abundance") +
   theme(axis.text.x = element_text(angle = 90,
-                                   hjust = 1))+
+                                   hjust = 1)) +
   ggtitle("Abundance of Bacteria on Day 42 per Subject")
 ```
  
